@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"$env:APPDATA\\\\Code\\\\User\" -ErrorAction SilentlyContinue | Select-Object Name)",
+      "Read(//c/Users/ro/AppData/Roaming/Code/User/**)",
+      "PowerShell(Get-Process | Where-Object { $_.ProcessName -match 'Code|Cursor|Windsurf|VSCodium' } | Select-Object -Unique ProcessName, Path)",
+      "PowerShell(Get-ChildItem \"$env:APPDATA\" -Directory | Where-Object { $_.Name -match 'Code|Cursor|Windsurf|VSCodium' } | Select-Object Name)",
+      "Read(//c/Users/ro/AppData/Roaming/Cursor/User/**)",
+      "PowerShell(Get-ChildItem \"$env:APPDATA\" -Directory | Where-Object { $_.Name -match 'antigravity|gravity' } | Select-Object Name, FullName)",
+      "PowerShell(Test-Path \"$env:APPDATA\\\\Antigravity IDE\\\\User\\\\keybindings.json\")",
+      "Bash(npm view *)",
+      "Bash(npm install *)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\ro\\AppData\\Roaming\\Antigravity IDE\\User"
+    ]
+  }
+}
