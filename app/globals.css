@@ -127,7 +127,7 @@ p {
 
 .onNorm .toolLetter {
   opacity: 0;
-  animation: typeOn .15s 1 forwards;
+  animation: typeOn .05s 1 forwards;
 }
 
 .infoHide,
@@ -163,9 +163,13 @@ p {
   }
 }
 
+.readyIn {
+  opacity: 0
+}
 
 /* fade in*/
-.fadeIn {
+.fadeIn,
+.pageReady .readyIn {
   opacity: 0;
   animation: fadeIn 0.5s ease-in-out forwards;
 }

@@ -37,7 +37,7 @@ export default function LogoScroll({ data, time }: any) {
           className="flex flex-shrink-0 items-center uppercase gap-4"
         >
 
-          <Logo className="w-[150px] h-auto fadeIn" fill="white" style={{ animationDelay: `${(i * .15)}s` }} />
+          <Logo className="w-[150px] h-auto readyIn" fill="white" style={{ animationDelay: `${.5 + (i * .15)}s` }} />
         </Link>
       ))}
 
