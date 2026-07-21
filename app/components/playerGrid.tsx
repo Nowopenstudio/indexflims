@@ -4,6 +4,7 @@ import useMeasure from "react-use-measure"
 import { Cross } from "./assets/svg"
 import React from "react"
 import Link from "next/link"
+import { TextOn } from "@/lib/util/misc"
 
 const COLUMNS = 6
 
@@ -25,9 +26,9 @@ export default function PlayGrid({ data }: any) {
 
             <h2 className="font-geis text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase">{data.abbr}</h2>
 
-            <h2>{data.client}</h2>
-            <h2 className="mb-[40px]">{data.title}</h2>
-            <h2>{data.type?.join(", ")}</h2>
+            <h2 className="onNorm"><TextOn text={data.client} num={0} /></h2>
+            <h2 className="mb-[40px] onNorm"><TextOn text={data.title} num={.5} /></h2>
+            <h2 className="onNorm"><TextOn text={data.type?.join(", ")} num={2.0} /></h2>
 
           </div>
         </div>

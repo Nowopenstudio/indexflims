@@ -33,7 +33,7 @@ export default async function RootLayout({
         <body className="min-h-screen w-screen  bg-(--black)">
           <Grid />
           <div className="nav absolute top-0 left-0 h-screen w-screen pointer-events-none flex items-center z-50">
-            <div className="w-screen h-auto">
+            <div className="w-screen h-auto logoHold">
               <LogoScroll time={20} />
             </div>
           </div>
