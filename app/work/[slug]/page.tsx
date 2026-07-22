@@ -1,5 +1,4 @@
-import PlayGrid from "@/app/components/playerGrid";
-import { MuxVideo, MuxVideoBG } from "@/lib/util/muxPlayer";
+import PlayerStage from "./PlayerStage";
 import { getData } from "@/lib/util/sanity";
 import React from "react";
 
@@ -23,10 +22,7 @@ export default async function Home({ params }: any) {
 
     <React.Fragment>
       <div className="w-screen h-screen top-0 left-0 z-0 ">
-        <div className="h-full w-full flex items-center noControl z-0 opacity-[.8]">
-          <MuxVideo playbackId={data.full.vid} title="Shows Video" ratio={data.full.ratio} />
-        </div>
-        <PlayGrid data={data} />
+        <PlayerStage data={data} />
       </div >
 
     </React.Fragment>

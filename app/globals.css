@@ -149,6 +149,19 @@ p {
   opacity: 1 !important;
 }
 
+.playerUI {
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.dim .playerUI {
+  opacity: 0;
+}
+
+.nav {
+  transition: all 1s ease-in-out;
+}
+
 @keyframes typeOn {
   0% {
     opacity: 0;

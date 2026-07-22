@@ -61,7 +61,7 @@ export default function WorkGrid({ data }: any) {
     return () => {
       document.body.classList.remove('hoverActive');
       document.body.classList.remove('loadActive');
-      document.body.classList.remove('pageReady');
+
       document.querySelectorAll('.active').forEach((el) => el.classList.remove('active'));
     };
   }, []);
@@ -78,7 +78,7 @@ export default function WorkGrid({ data }: any) {
           }}
         />
       )}
-      <div className="absolute w-screen h-screen top-0 left-0 z-0">
+      <div className="absolute w-screen h-screen top-0 left-0 z-0 pointer-events-none">
         <div className="h-full w-full bgMux noControl z-0 opacity-[.8]">
           <MuxVideoBG playbackId={data[current].loop.vid} title="Shows Video" ratio={data[current].loop.ratio} />
         </div>
@@ -97,25 +97,25 @@ export default function WorkGrid({ data }: any) {
       </div>
       <div
         ref={ref}
-        className={`z-50 absolute inset-0 w-screen h-screen flex items-center overflow-hidden z-10${pageLoading ? ' pageReady' : ''}`}
+        className={`z-50 absolute inset-0 w-screen h-screen flex items-center overflow-hidden z-10${pageLoading ? ' pageReady' : ''} pointer-events-none`}
       >
         <div className="grid grid-cols-6 w-full">
-          <div className="col-span-full grid grid-cols-6 ">
+          <div className="col-span-full grid grid-cols-6 pointer-events-none ">
             <div className="aspect-square relative"></div>
           </div>
           {pageReady && data?.map((item: any, i: any) => (
             <React.Fragment key={i}>
-              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--white) uppercase" style={{ animationDelay: `${i * .00}s` }}>
+              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${i * .00}s` }}>
                 <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black)"><p >{i + 1}</p> </div>
                 <h2 className=" text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
                 <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
                 <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1.25} /></h2>
-                {i == current && item.type && <h2 className="onNorm"><TextOn text={item.type?.join(", ")} num={0} /></h2>}
+                {i == current && item.type && <h2 className="onNorm">{item.type && <TextOn text={item.type?.join(", ")} num={0} />}</h2>}
               </Link>
               <div className="aspect-square"></div>
               {i == 2 ? (
                 <React.Fragment>
-                  <div className="col-span-full grid grid-cols-6 ">
+                  <div className="col-span-full grid grid-cols-6 pointer-events-none">
                     <div className="aspect-square relative"></div>
                   </div>
                   <div className="aspect-square relative"></div>
@@ -124,7 +124,7 @@ export default function WorkGrid({ data }: any) {
               ) : ('')}
             </React.Fragment>
           ))}
-          <div className="col-span-full grid grid-cols-6 ">
+          <div className="col-span-full grid grid-cols-6 pointer-events-none ">
             <div className="aspect-square relative"></div>
           </div>
         </div>

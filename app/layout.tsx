@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "@/lib/util/SmoothScrolling";
-import LogoScroll from "./components/logoScroll";
+import Nav from "./components/nav";
 import Grid from "./components/grid";
 import { getData } from "@/lib/util/sanity";
 import WorkGrid from "./components/workGrid";
@@ -32,11 +32,7 @@ export default async function RootLayout({
 
         <body className="min-h-screen w-screen  bg-(--black)">
           <Grid />
-          <div className="nav absolute top-0 left-0 h-screen w-screen pointer-events-none flex items-center z-50">
-            <div className="w-screen h-auto logoHold">
-              <LogoScroll time={20} />
-            </div>
-          </div>
+          <Nav />
           {children}
         </body>
       </SmoothScrolling>

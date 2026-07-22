@@ -8,7 +8,7 @@ import Link from "next/link"
 
 const ITEM_COUNT = 10
 
-export default function LogoScroll({ data, time }: any) {
+export default function LogoScroll({ data, time, workMode }: any) {
   const [ref, { width }] = useMeasure()
   const xTranslation = useMotionValue(0)
 
@@ -27,14 +27,14 @@ export default function LogoScroll({ data, time }: any) {
   return (
     <motion.div
       ref={ref}
-      className="flex left-0 items-center top-[0] z-[1] gap-[450px] w-max h-full navHold"
+      className={`logoHold flex left-0 ${workMode ? 'items-end pb-1' : 'items-center'} top-[0] z-[1] gap-[450px] w-max h-full navHold`}
       style={{ x: xTranslation, color: "black" }}
     >
       {Array.from({ length: ITEM_COUNT }).map((_, i) => (
         <Link
           key={i}
           href={`/`}
-          className="flex flex-shrink-0 items-center uppercase gap-4"
+          className="flex flex-shrink-0 items-center uppercase gap-4 pointer-events-auto"
         >
 
           <Logo className="w-[150px] h-auto readyIn" fill="white" style={{ animationDelay: `${.5 + (i * .15)}s` }} />

@@ -36,7 +36,7 @@ export default function Footer({ data }: any) {
                     ))}
                 </div>
             </div>
-            <div className="w-screen h-auto">
+            <div className="w-screen h-auto overflow-x-hidden">
                 <FooterScroll time={20} />
             </div>
         </div>
