@@ -149,12 +149,14 @@ p {
   opacity: 1 !important;
 }
 
-.playerUI {
+.playerUI,
+.playlist {
   opacity: 1;
   transition: opacity .5s ease-in-out;
 }
 
-.dim .playerUI {
+.dim .playerUI,
+.dim .playlist {
   opacity: 0;
 }
 
