@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getData } from "@/lib/util/sanity";
-import Playlist from "../components/Playlist";
+import Playlist from "@/app/components/Playlist";
 
 
 

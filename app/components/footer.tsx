@@ -4,7 +4,7 @@ import FooterScroll from "./footerScroll";
 export default function Footer({ data }: any) {
     console.log(data)
     return (
-        <div className='w-screen bg-(--black)'>
+        <div id="footer" className='w-screen bg-(--black)'>
             <div className="w-screen  text-(--white) mb-[200px] uppercase grid grid-cols-6 pt-8">
                 {data?.contact?.map((item: any, i: number) => (
                     <div key={i} className="col-span-1 p-4 uppercase">

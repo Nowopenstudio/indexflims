@@ -9,19 +9,29 @@ export default function SmoothScrolling({ children }:any) {
   const lenis = useLenis();
 
   useEffect(() => {
-  
+
     if (lenis) {
 
-      
       lenis.stop()
       requestAnimationFrame(() => {
         lenis.start()
 
+        if (window.location.hash) {
+          setTimeout(() => {
+            const target = document.querySelector(window.location.hash)
+            if (target) {
+              lenis.scrollTo(target as HTMLElement)
+            }
+          }, 100)
+        } else {
+          lenis.scrollTo(0, { immediate: true });
+        }
       })
-           lenis.scrollTo(0, { immediate: true });
     }
-window.scrollTo(0,0);
-   
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+
   }, [pathname, lenis])
   
   return (

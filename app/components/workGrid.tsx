@@ -4,6 +4,7 @@ import useMeasure from "react-use-measure"
 import { Cross } from "./assets/svg"
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { TextOn } from "@/lib/util/misc"
 import { MuxVideoBG } from "@/lib/util/muxPlayer"
 import MuxPlayer from "@mux/mux-player-react"
@@ -19,9 +20,18 @@ export default function WorkGrid({ data }: any) {
   const [showLoader, setShowLoader] = useState(true)
   const [pageLoading, setPageLoading] = useState(false)
   const [pageReady, setPageReady] = useState(false)
+  const pathname = usePathname()
   const cellSize = width / COLUMNS
   let rows = cellSize > 0 ? Math.ceil(height / cellSize) : 0
   if (rows > 0 && rows % 2 === 0) rows += 1
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      setPageReady(true)
+      setShowLoader(false)
+      document.body.classList.add('pageReady')
+    }
+  }, [pathname])
 
   const videoIds: string[] = Array.from(new Set<string>(data?.map((item: any) => item.loop?.vid).filter(Boolean) ?? []))
   const allLoaded = loaderPercent >= 100
