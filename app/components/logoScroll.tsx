@@ -3,6 +3,7 @@
 import { animate, useMotionValue, motion } from "motion/react"
 import useMeasure from "react-use-measure"
 import { useEffect } from "react"
+import { usePathname } from "next/navigation"
 import { Logo } from "./assets/svg"
 import Link from "next/link"
 
@@ -11,6 +12,7 @@ const ITEM_COUNT = 10
 export default function LogoScroll({ data, time, workMode }: any) {
   const [ref, { width }] = useMeasure()
   const xTranslation = useMotionValue(0)
+  const pathname = usePathname()
 
   useEffect(() => {
     if (!width) return
@@ -37,7 +39,7 @@ export default function LogoScroll({ data, time, workMode }: any) {
           className="flex flex-shrink-0 items-center uppercase gap-4 pointer-events-auto"
         >
 
-          <Logo className="w-[150px] h-auto readyIn" fill="white" style={{ animationDelay: `${.5 + (i * .15)}s` }} />
+          <Logo className="w-[150px] h-auto readyIn" fill={pathname === "/work/all" ? "black" : "white"} style={{ animationDelay: `${.5 + (i * .15)}s` }} />
         </Link>
       ))}
 

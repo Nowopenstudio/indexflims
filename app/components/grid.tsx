@@ -20,8 +20,12 @@ export default function Grid() {
     >
       <div className="grid grid-cols-6 w-full">
         {Array.from({ length: rows * COLUMNS }).map((_, i) => (
-          <div key={i} className="aspect-square relative fadeIn" style={{ animationDelay: `${i * .05}s` }}>
-            <Cross className="w-[50px] h-[50px] absolute top-0 left-0 translate-x-[-50%] translate-y-[-50%]" stroke={pathname === "/work/all" ? "black" : "white"} strokeWidth={.5} />
+          <div key={i} className="aspect-square relative  fadeIn" style={{ animationDelay: `${i * .05}s` }}>
+            <Cross className="w-[50px] h-[50px] absolute top-0 left-0 translate-x-[-51%] translate-y-[-50%]" stroke={pathname === "/work/all" ? "black" : "white"} strokeWidth={.5} />
+            {(i + 1) % COLUMNS === 0 ? (
+              <Cross className="w-[50px] h-[50px] absolute top-0 right-0 translate-x-[50%] translate-y-[-50%]" stroke={pathname === "/work/all" ? "black" : "white"} strokeWidth={.5} />
+
+            ) : ('')}
           </div>
         ))}
       </div>

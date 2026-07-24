@@ -1,41 +1,32 @@
 "use client";
-import { ReactLenis, useLenis} from "lenis/react";
+import { ReactLenis } from "lenis/react";
 import { usePathname } from 'next/navigation';
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function SmoothScrolling({ children }:any) {
     const pathname = usePathname();
 
-  const lenis = useLenis();
+  const lenisRef = useRef<any>(null);
 
   useEffect(() => {
 
-    if (lenis) {
+    const lenis = lenisRef.current?.lenis
 
+    if (window.location.hash) return
+
+    if (lenis) {
       lenis.stop()
       requestAnimationFrame(() => {
         lenis.start()
-
-        if (window.location.hash) {
-          setTimeout(() => {
-            const target = document.querySelector(window.location.hash)
-            if (target) {
-              lenis.scrollTo(target as HTMLElement)
-            }
-          }, 100)
-        } else {
-          lenis.scrollTo(0, { immediate: true });
-        }
+        lenis.scrollTo(0, { immediate: true });
       })
     }
-    if (!window.location.hash) {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
 
-  }, [pathname, lenis])
-  
+  }, [pathname])
+
   return (
-    <ReactLenis root options={{ lerp: 0.05, duration: 1.5, wheelMultiplier: 1.2, orientation:'vertical'}}>
+    <ReactLenis root ref={lenisRef} options={{ lerp: 0.05, duration: 1.5, wheelMultiplier: 1.2, orientation:'vertical'}}>
       {children}
     </ReactLenis>
   );

@@ -10,7 +10,7 @@ import Catalog from "./catalog";
 export default async function Home({ params }: any) {
   const { slug } = await params
   const query = await getData(`{
-    'data':*[_type=='projects']|order(orderRank){title, client,abbr,type}
+    'data':*[_type=='projects']|order(orderRank){title, client,abbr,type,"slug":slug.current}
  }`)
 
 

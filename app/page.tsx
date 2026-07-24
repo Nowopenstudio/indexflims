@@ -12,7 +12,7 @@ export default async function Home(props: {
   const params = await props.params
 
   const query = await getData(`{
-    'data':*[_type=='settings'][0]{reel{"image":image.asset->url, "vid":video.asset->playbackId, "ratio":video.asset->data.aspect_ratio},feat[]->{title,type,client,abbr,"slug":slug.current,copy,loop{"image":image.asset->url, "vid":video.asset->playbackId, "ratio":video.asset->data.aspect_ratio}},contact,socials }
+    'data':*[_type=='settings'][0]{about,reel{"image":image.asset->url, "vid":video.asset->playbackId, "ratio":video.asset->data.aspect_ratio},feat[]->{title,type,client,abbr,"slug":slug.current,copy,loop{"image":image.asset->url, "vid":video.asset->playbackId, "ratio":video.asset->data.aspect_ratio}},contact,socials }
     }`)
   const { data } = query.data
   return (

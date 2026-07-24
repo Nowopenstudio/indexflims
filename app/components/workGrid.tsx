@@ -14,7 +14,7 @@ const COLUMNS = 6
 
 export default function WorkGrid({ data }: any) {
   const [ref, { width, height }] = useMeasure()
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(null)
   const [loadedIds, setLoadedIds] = useState<Set<string>>(new Set())
   const [loaderPercent, setLoaderPercent] = useState(0)
   const [showLoader, setShowLoader] = useState(true)
@@ -30,11 +30,19 @@ export default function WorkGrid({ data }: any) {
       setPageReady(true)
       setShowLoader(false)
       document.body.classList.add('pageReady')
+      return
+    }
+    if (sessionStorage.getItem('skipLoader') === 'true') {
+      sessionStorage.removeItem('skipLoader')
+      setPageReady(true)
+      setShowLoader(false)
+      document.body.classList.add('pageReady')
     }
   }, [pathname])
 
   const videoIds: string[] = Array.from(new Set<string>(data?.map((item: any) => item.loop?.vid).filter(Boolean) ?? []))
   const allLoaded = loaderPercent >= 100
+  const [preloadCount, setPreloadCount] = useState(1)
 
   const markLoaded = (id: string) => {
     setLoadedIds((prev) => (prev.has(id) ? prev : new Set(prev).add(id)))
@@ -45,12 +53,19 @@ export default function WorkGrid({ data }: any) {
     setLoaderPercent(Math.round((loadedIds.size / videoIds.length) * 100))
   }, [loadedIds, videoIds.length]);
 
+  useEffect(() => {
+    if (preloadCount >= videoIds.length) return
+    const timer = setTimeout(() => setPreloadCount((c) => c + 1), 200)
+    return () => clearTimeout(timer)
+  }, [preloadCount, videoIds.length]);
+
   const Hover = (i: any, e: any) => {
     setCurrent(i);
     document.body.classList.add('hoverActive');
     e.currentTarget.classList.add('active');
   }
   const UnHover = (e: any) => {
+    setCurrent(null)
     document.body.classList.remove('hoverActive');
     e.currentTarget.classList.remove('active');
   }
@@ -90,11 +105,14 @@ export default function WorkGrid({ data }: any) {
       )}
       <div className="absolute w-screen h-screen top-0 left-0 z-0 pointer-events-none">
         <div className="h-full w-full bgMux noControl z-0 opacity-[.8]">
-          <MuxVideoBG playbackId={data[current].loop.vid} title="Shows Video" ratio={data[current].loop.ratio} />
+          {current && current == data.length ? (<MuxVideoBG playbackId={data[0].loop.vid} title="Shows Video" ratio={data[0].loop.ratio} />) : (
+            <MuxVideoBG playbackId={data[current ? current : 0].loop.vid} title="Shows Video" ratio={data[current ? current : 0].loop.ratio} />
+          )}
+
         </div>
       </div>
       <div style={{ position: 'fixed', width: 1, height: 1, top: 0, left: 0, opacity: 0, overflow: 'hidden', pointerEvents: 'none' }} aria-hidden>
-        {videoIds.map((id) => (
+        {videoIds.slice(0, preloadCount).map((id) => (
           <MuxPlayer
             key={id}
             playbackId={id}
@@ -115,12 +133,12 @@ export default function WorkGrid({ data }: any) {
           </div>
           {pageReady && data?.map((item: any, i: any) => (
             <React.Fragment key={i}>
-              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${i * .00}s` }}>
+              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${i * .01}s` }}>
                 <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black)"><p >{i + 1}</p> </div>
                 <h2 className=" text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
                 <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
-                <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1.25} /></h2>
-                {i == current && item.type && <h2 className="onNorm">{item.type && <TextOn text={item.type?.join(", ")} num={0} />}</h2>}
+                <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1} /></h2>
+                {i == current && <h2 className="onNorm">{<TextOn text="view project" num={0} />}</h2>}
               </Link>
               <div className="aspect-square"></div>
               {i == 2 ? (
@@ -129,11 +147,18 @@ export default function WorkGrid({ data }: any) {
                     <div className="aspect-square relative"></div>
                   </div>
                   <div className="aspect-square relative"></div>
-                  <div className="aspect-square relative"></div>
                 </React.Fragment>
               ) : ('')}
             </React.Fragment>
           ))}
+          {pageReady && <Link href={`/work/all`} onMouseEnter={(e) => { Hover(data.length, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${data.length * .00}s` }}>
+            <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black)"><p >{">"}</p> </div>
+            <h2 className=" text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase onNorm infoHide"> <TextOn text={'full project list'} num={.5 + (data.length * .1)} /></h2>
+
+
+            {data.length == current && <h2 className="onNorm">{<TextOn text="view all" num={0} />}</h2>}
+          </Link>}
+
           <div className="col-span-full grid grid-cols-6 pointer-events-none ">
             <div className="aspect-square relative"></div>
           </div>
