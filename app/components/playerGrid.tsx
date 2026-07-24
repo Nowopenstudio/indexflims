@@ -1,9 +1,7 @@
 'use client'
 
 import useMeasure from "react-use-measure"
-import { Cross } from "./assets/svg"
-import React, { useEffect, useRef, useState } from "react"
-import Link from "next/link"
+import { useEffect, useRef, useState } from "react"
 import { TextOn } from "@/lib/util/misc"
 
 const COLUMNS = 6

@@ -33,7 +33,7 @@ export default function Footer({ data }: any) {
                         ))}
                     </div>
                 ))}
-                <div className="col-span-1 col-end-5 p-4">
+                <div className="col-span-1 col-end-5 px-4 pt-[100px]">
                     {data.socials?.map((item: any, i: number) => (
                         <React.Fragment key={`social-${i}`} >
                             <div className="w-full text-(--white) singleNav">

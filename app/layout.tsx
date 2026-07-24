@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "@/lib/util/SmoothScrolling";
 import Nav from "./components/nav";
 import Grid from "./components/grid";
-import { getData } from "@/lib/util/sanity";
-import WorkGrid from "./components/workGrid";
 
 
 

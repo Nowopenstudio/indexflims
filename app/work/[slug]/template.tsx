@@ -1,7 +1,5 @@
 'use client'
 import { motion } from "framer-motion";
-import { useLenis } from "lenis/react";
-import { useEffect } from "react";
 
 export default function Template({ children }: any) {
 

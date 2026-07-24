@@ -1,9 +1,6 @@
-import { MuxVideoBG } from "@/lib/util/muxPlayer";
 import { getData } from "@/lib/util/sanity";
-import Image from "next/image";
 import React from "react";
 import WorkGrid from "./components/workGrid";
-import FooterScroll from "./components/footerScroll";
 import Footer from "./components/footer";
 
 export default async function Home(props: {

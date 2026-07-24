@@ -1,7 +1,6 @@
 'use client'
 
 import useMeasure from "react-use-measure"
-import { Cross } from "./assets/svg"
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
