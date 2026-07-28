@@ -11,7 +11,7 @@ import LogoLoader from "./logoLoader"
 
 const COLUMNS = 6
 
-export default function WorkGrid({ data }: any) {
+export default function WorkGrid({ data, all }: any) {
   const [ref, { width, height }] = useMeasure()
   const [current, setCurrent] = useState(null)
   const [loadedIds, setLoadedIds] = useState<Set<string>>(new Set())
@@ -107,7 +107,7 @@ export default function WorkGrid({ data }: any) {
       )}
       <div className="absolute w-screen h-screen top-0 left-0 z-0 pointer-events-none">
         <div className="h-full w-full bgMux noControl z-0 opacity-[.8]">
-          {current && current == data.length ? (<MuxVideoBG playbackId={data[0].loop.vid} title="Shows Video" ratio={data[0].loop.ratio} />) : (
+          {current && current == data.length ? (<MuxVideoBG playbackId={all.vid} title="Shows Video" ratio={all.ratio} />) : (
             <MuxVideoBG playbackId={data[current ? current : 0].loop.vid} title="Shows Video" ratio={data[current ? current : 0].loop.ratio} />
           )}
 

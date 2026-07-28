@@ -7,12 +7,12 @@ export default function Footer({ data }: any) {
     return (
         <div id="footer" className='w-screen bg-(--black)'>
             <div className="w-screen  text-(--white) mb-[200px] uppercase grid grid-cols-6 py-12">
-                <div className="col-span-3 px-4 "><div className="w-2/3">
+                <div className="mb-8 2xl:mb-0 col-span-full 2xl:col-span-3 px-4 "><div className="w-full lg:w-2/3">
                     <div className="w-full flex items-center mb-4  text-(--gray)"><p>INFO</p></div>
                     <PortableText value={data?.about} />
                 </div></div>
                 {data?.contact?.map((item: any, i: number) => (
-                    <div key={i} className="col-span-1 p-4 uppercase">
+                    <div key={i} className="col-span-full lg:col-span-2 xl:col-span-1 p-4 uppercase">
                         <div className="w-full flex items-center mb-4  text-(--gray)"><p>{item.contactType}</p></div>
                         {item.contacts?.map((single: any, s: number) => (
                             <React.Fragment key={i + s} >
@@ -33,7 +33,7 @@ export default function Footer({ data }: any) {
                         ))}
                     </div>
                 ))}
-                <div className="col-span-1 col-end-5 px-4 pt-[100px]">
+                <div className="col-span-full 2xl:col-span-1 2xl:col-end-5 px-4 2xl:pt-[100px]">
                     {data.socials?.map((item: any, i: number) => (
                         <React.Fragment key={`social-${i}`} >
                             <div className="w-full text-(--white) singleNav">

@@ -62,9 +62,9 @@ export default function Nav() {
                         className="flex flex-shrink-0 items-center uppercase gap-4 pointer-events-auto"
                     >
 
-                        <Logo className="w-[150px] h-auto readyIn" fill={pathname === "/work/all" ? "black" : "white"} style={{ animationDelay: `${.5}s` }} />
+                        <Logo className="w-[150px] h-auto readyIn" fill={"white"} style={{ animationDelay: `${1.5}s` }} />
                     </Link>
-                    <div className="py-4 flex justify-end text-white readyIn gap-8 uppercase "><Link className="pointer-events-auto singleNav" href="/work/all"><h2>Work</h2></Link><Link href="/#footer" scroll={false} className="pointer-events-auto singleNav" onClick={goToFooter}><h2>Info</h2></Link></div>
+                    <div className="py-4 flex justify-end text-white readyIn gap-8 uppercase " style={{ animationDelay: `${1.75}s` }}><Link className="pointer-events-auto singleNav" href="/work/all"><h2>Work</h2></Link><Link href="/#footer" scroll={false} className="pointer-events-auto singleNav" onClick={goToFooter}><h2>Info</h2></Link></div>
                 </div>
             </div>
             <div className={`nav absolute overflow-x-hidden top-0 left-0 h-screen w-screen pointer-events-none flex ${workMode ? 'items-end' : 'items-center'} z-50`}>
