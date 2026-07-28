@@ -19,10 +19,12 @@ export default function Catalog({ data }: any) {
 
   const Hover = (i: any, e: any) => {
     setCurrent(i);
+
     e.currentTarget.classList.add('active');
   }
   const UnHover = (e: any) => {
     setCurrent(null);
+
     e.currentTarget.classList.remove('active');
   }
 
@@ -41,12 +43,12 @@ export default function Catalog({ data }: any) {
 
           {data?.map((item: any, i: any) => (
             <React.Fragment key={i}>
-              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--black) uppercase pointer-events-auto" style={{ animationDelay: `${i * .1}s` }}>
-                <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--black) text-(--white)"><p >{i + 1}</p> </div>
-                <h2 className=" text-[24px] leading-tight uppercase text-(--black) mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
+              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--black) uppercase pointer-events-auto hover:bg-(--oj) hover:text-(--white)" style={{ animationDelay: `${i * .1}s` }}>
+                <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--black) text-white counter "><p >{i + 1}</p> </div>
+                <h2 className=" text-[24px] leading-tight uppercase  mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
                 <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
                 <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1} /></h2>
-                {i == current && <h2 className="onNorm text-(--oj)"> <TextOn text="view project" num={0} /></h2>}
+                {i == current && <h2 className="onNorm "> <TextOn text="view project" num={0} /></h2>}
               </Link>
             </React.Fragment>
           ))}

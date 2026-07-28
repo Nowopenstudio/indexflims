@@ -6,8 +6,8 @@ export default function Footer({ data }: any) {
     console.log(data)
     return (
         <div id="footer" className='w-screen bg-(--black)'>
-            <div className="w-screen  text-(--white) mb-[200px] uppercase grid grid-cols-6 ">
-                <div className="col-span-3 p-4 "><div className="w-2/3">
+            <div className="w-screen  text-(--white) mb-[200px] uppercase grid grid-cols-6 py-12">
+                <div className="col-span-3 px-4 "><div className="w-2/3">
                     <div className="w-full flex items-center mb-4  text-(--gray)"><p>INFO</p></div>
                     <PortableText value={data?.about} />
                 </div></div>

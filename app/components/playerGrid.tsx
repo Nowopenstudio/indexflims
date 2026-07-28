@@ -2,7 +2,9 @@
 
 import useMeasure from "react-use-measure"
 import { useEffect, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
 import { TextOn } from "@/lib/util/misc"
+import { Cross } from "./assets/svg"
 
 const COLUMNS = 6
 const IDLE_TIMEOUT = 4000
@@ -18,6 +20,7 @@ const formatTime = (time: number) => {
 }
 
 export default function PlayGrid({ data, duration, currentTime, isPlaying, onToggle }: any) {
+  const router = useRouter()
   const [ref, { width, height }] = useMeasure()
   const cellSize = width / COLUMNS
   let rows = cellSize > 0 ? Math.ceil(height / cellSize) : 0
@@ -28,6 +31,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
   const [dim, setDim] = useState(false)
   const idleTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
+  const [hoveringOther, setHoveringOther] = useState(false)
 
   useEffect(() => {
     const resetIdle = () => {
@@ -73,6 +77,17 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
             <h2 className="onNorm">{data.type && <TextOn text={data.type?.join(", ")} num={2.0} />}</h2>
 
           </div>
+          <div
+            className="aspect-square col-end-7 flex justify-end p-4 items-start backBut"
+            onClick={(e) => {
+              e.stopPropagation()
+              router.back()
+            }}
+            onMouseEnter={() => setHoveringOther(true)}
+            onMouseLeave={() => setHoveringOther(false)}
+          >
+            <Cross stroke="white" className="w-[50px] h-auto rotate-[45deg]" />
+          </div>
         </div>
         <div className="col-span-full grid grid-cols-6 ">
           <div className="aspect-square relative"></div>
@@ -90,7 +105,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
         className="controls fixed pointer-events-none uppercase text-(--white) text-[12px] z-50"
         style={{ left: mouse.x, top: mouse.y, transform: 'translate(-50%, -50%)' }}
       >
-        <h2>{isPlaying ? 'Pause' : 'Play'}</h2>
+        <h2>{hoveringOther ? 'Back' : isPlaying ? 'Pause' : 'Play'}</h2>
       </div>
     </div >
   )

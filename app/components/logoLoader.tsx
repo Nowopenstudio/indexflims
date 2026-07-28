@@ -37,6 +37,11 @@ export default function LogoLoader({ percent, onSettled, onScaleStart }: any) {
   const progress = useMotionValue(0)
   const [holeTransform, setHoleTransform] = useState(`translate(${tx}, ${ty}) scale(${scale})`)
 
+  const onSettledRef = useRef(onSettled)
+  const onScaleStartRef = useRef(onScaleStart)
+  useEffect(() => { onSettledRef.current = onSettled }, [onSettled])
+  useEffect(() => { onScaleStartRef.current = onScaleStart }, [onScaleStart])
+
   useEffect(() => {
     const apply = (v: number) => {
       const x = tx + (bigTx - tx) * v
@@ -52,15 +57,15 @@ export default function LogoLoader({ percent, onSettled, onScaleStart }: any) {
     if (!complete) return
     let controls: ReturnType<typeof animate> | undefined
     const timer = setTimeout(() => {
-      onScaleStart?.()
-      controls = animate(progress, 1, { duration: 1.6, ease: "easeInOut" })
-      controls.then(() => onSettled?.())
+      onScaleStartRef.current?.()
+      controls = animate(progress, 1, { duration: 2.4, ease: "easeOut" })
+      controls.then(() => onSettledRef.current?.())
     }, 1000)
     return () => {
       clearTimeout(timer)
       controls?.stop()
     }
-  }, [complete, progress, onSettled, onScaleStart])
+  }, [complete, progress])
 
 
   return (
@@ -68,7 +73,7 @@ export default function LogoLoader({ percent, onSettled, onScaleStart }: any) {
       ref={ref}
       className="fixed inset-0 h-screen w-screen z-[40] overflow-hidden"
       animate={{ opacity: complete ? 0 : 1 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: complete ? 2.6 : 0 }}
+      transition={{ duration: 0.8, ease: "easeOut", delay: complete ? 3.4 : 0 }}
       style={{ pointerEvents: complete ? "none" : "auto" }}
     >
       <svg className="absolute inset-0 w-full h-full">
@@ -102,7 +107,7 @@ export default function LogoLoader({ percent, onSettled, onScaleStart }: any) {
           />
         </clipPath>
         <g clipPath="url(#wipeClip)">
-          <rect x="0" y="0" width="100%" height="100%" fill="#2A2A2A" mask="url(#logoMask)" />
+          <rect x="0" y="0" width="100%" height="100%" fill="#1a1a1aff" mask="url(#logoMask)" />
           <motion.rect
             x="0"
             y="0"
