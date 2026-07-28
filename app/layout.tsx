@@ -25,7 +25,7 @@ export default async function RootLayout({
       <SmoothScrolling>
 
         <body className="min-h-screen w-screen  bg-(--black)">
-          <Grid />
+          {/* <Grid /> */}
           <Nav />
           {children}
         </body>

@@ -6,6 +6,7 @@ import { useLenis } from "lenis/react"
 import LogoScroll from "./logoScroll"
 import React from "react"
 import Link from "next/link"
+import { Logo } from "./assets/svg"
 
 export default function Nav() {
     const pathname = usePathname()
@@ -39,6 +40,7 @@ export default function Nav() {
 
     useEffect(() => {
         document.body.classList.toggle('pageReady', pathname !== '/')
+        document.body.classList.toggle('pageSettled', pathname !== '/')
     }, [pathname])
 
     useEffect(() => {
@@ -53,10 +55,21 @@ export default function Nav() {
 
     return (
         <React.Fragment>
-            <div className="fixed w-screen z-50 pointer-events-none mix-blend-difference bg-blend-difference playerUI"><div className="p-4 flex justify-end text-white readyIn gap-8 uppercase "><Link className="pointer-events-auto singleNav" href="/work/all"><h2>Work</h2></Link><Link href="/#footer" scroll={false} className="pointer-events-auto singleNav" onClick={goToFooter}><h2>Info</h2></Link></div></div>
+            <div className="fixed w-screen z-50 pointer-events-none mix-blend-difference bg-blend-difference playerUI">
+                <div className="w-screen justify-between flex items-center p-4">
+                    <Link
+                        href={`/`}
+                        className="flex flex-shrink-0 items-center uppercase gap-4 pointer-events-auto"
+                    >
+
+                        <Logo className="w-[150px] h-auto readyIn" fill={pathname === "/work/all" ? "black" : "white"} style={{ animationDelay: `${.5}s` }} />
+                    </Link>
+                    <div className="p-4 flex justify-end text-white readyIn gap-8 uppercase "><Link className="pointer-events-auto singleNav" href="/work/all"><h2>Work</h2></Link><Link href="/#footer" scroll={false} className="pointer-events-auto singleNav" onClick={goToFooter}><h2>Info</h2></Link></div>
+                </div>
+            </div>
             <div className={`nav absolute overflow-x-hidden top-0 left-0 h-screen w-screen pointer-events-none flex ${workMode ? 'items-end' : 'items-center'} z-50`}>
                 <div className={`w-screen h-auto logoHold`}>
-                    <LogoScroll time={20} workMode={workMode} />
+                    {/* <LogoScroll time={20} workMode={workMode} /> */}
                 </div>
             </div>
         </React.Fragment>

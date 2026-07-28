@@ -47,9 +47,9 @@ export default function Footer({ data }: any) {
 
             </div>
 
-            <div className="w-screen h-auto overflow-x-hidden">
+            {/* <div className="w-screen h-auto overflow-x-hidden">
                 <FooterScroll time={20} />
-            </div>
+            </div> */}
         </div>
     );
 }

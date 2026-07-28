@@ -2,6 +2,7 @@ import { getData } from "@/lib/util/sanity";
 import React from "react";
 import WorkGrid from "./components/workGrid";
 import Footer from "./components/footer";
+import PageReadyGate from "./components/PageReadyGate";
 
 export default async function Home(props: {
   params: Promise<{ countryCode: string }>
@@ -22,7 +23,9 @@ export default async function Home(props: {
           </div> */}
         </div>
       </div>
-      <Footer data={data} />
+      <PageReadyGate>
+        <Footer data={data} />
+      </PageReadyGate>
     </React.Fragment>
   );
 }

@@ -9,7 +9,7 @@ const [, , VB_WIDTH_STR, VB_HEIGHT_STR] = LOGO_VIEWBOX.split(' ')
 const LOGO_WIDTH = Number(VB_WIDTH_STR)
 const LOGO_HEIGHT = Number(VB_HEIGHT_STR)
 const LOGO_DISPLAY_WIDTH = 400
-const MIN_DURATION = 2
+const MIN_DURATION = 1
 
 export default function LogoLoader({ percent, onSettled, onScaleStart }: any) {
   const [ref, { width, height }] = useMeasure()
