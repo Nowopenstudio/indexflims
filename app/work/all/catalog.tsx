@@ -37,7 +37,7 @@ export default function Catalog({ data }: any) {
       </div>
       <div
         ref={ref}
-        className={`z-50 relative md:absolute inset-0 w-screen md:h-screen flex items-center overflow-hidden z-10 pointer-events-none`}
+        className={`z-50 pt-[100px] md:pt-0 relative md:absolute inset-0 w-screen md:h-screen flex items-center overflow-hidden z-10 pointer-events-none`}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 w-full items-start">
 
