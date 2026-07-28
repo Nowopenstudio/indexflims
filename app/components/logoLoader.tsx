@@ -55,9 +55,9 @@ export default function LogoLoader({ percent, onSettled, onScaleStart }: any) {
 
   useEffect(() => {
     if (!complete) return
+    onScaleStartRef.current?.()
     let controls: ReturnType<typeof animate> | undefined
     const timer = setTimeout(() => {
-      onScaleStartRef.current?.()
       controls = animate(progress, 1, { duration: 2.4, ease: "easeOut" })
       controls.then(() => onSettledRef.current?.())
     }, 1000)
