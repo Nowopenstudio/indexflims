@@ -22,7 +22,7 @@ export default async function Home({ params }: any) {
 
 
     <React.Fragment>
-      <div className="w-screen h-screen top-0 left-0 z-0 bg-(--white)">
+      <div className="w-screen md:h-screen top-0 left-0 z-0 bg-(--white)">
         {/* <Grid /> */}
         <Catalog data={data} />
       </div >

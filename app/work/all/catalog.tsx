@@ -32,7 +32,7 @@ export default function Catalog({ data }: any) {
   return (
     <React.Fragment>
 
-      <div className="absolute w-screen h-screen top-0 left-0 z-0 pointer-events-none">
+      <div className="md:absolute w-screen md:h-screen top-0 left-0 z-0 pointer-events-none bg-(--white)">
 
       </div>
       <div
