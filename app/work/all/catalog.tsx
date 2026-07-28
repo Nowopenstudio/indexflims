@@ -37,13 +37,13 @@ export default function Catalog({ data }: any) {
       </div>
       <div
         ref={ref}
-        className={`z-50 absolute inset-0 w-screen h-screen flex items-center overflow-hidden z-10 pointer-events-none`}
+        className={`z-50 relative md:absolute inset-0 w-screen md:h-screen flex items-center overflow-hidden z-10 pointer-events-none`}
       >
-        <div className="grid grid-cols-6 w-full items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 w-full items-start">
 
           {data?.map((item: any, i: any) => (
             <React.Fragment key={i}>
-              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--black) uppercase pointer-events-auto hover:bg-(--oj) hover:text-(--white)" style={{ animationDelay: `${i * .1}s` }}>
+              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="md:aspect-square relative fadeIn p-4 text-(--black) uppercase pointer-events-auto hover:bg-(--oj) hover:text-(--white)" style={{ animationDelay: `${i * .1}s` }}>
                 <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--black) text-white counter "><p >{i + 1}</p> </div>
                 <h2 className=" text-[24px] leading-tight uppercase  mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
                 <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
