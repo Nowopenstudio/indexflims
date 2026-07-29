@@ -105,14 +105,7 @@ export default function WorkGrid({ data, all }: any) {
           }}
         />
       )}
-      <div className="absolute w-screen h-screen top-0 left-0 z-0 pointer-events-none">
-        <div className="h-full w-full bgMux noControl z-0 opacity-[.8]">
-          {current && current == data.length ? (<MuxVideoBG playbackId={all.vid} title="Shows Video" ratio={all.ratio} />) : (
-            <MuxVideoBG playbackId={data[current ? current : 0].loop.vid} title="Shows Video" ratio={data[current ? current : 0].loop.ratio} />
-          )}
 
-        </div>
-      </div>
       <div style={{ position: 'fixed', width: 1, height: 1, top: 0, left: 0, opacity: 0, overflow: 'hidden', pointerEvents: 'none' }} aria-hidden>
         {videoIds.slice(0, preloadCount).map((id) => (
           <MuxPlayer
@@ -127,28 +120,32 @@ export default function WorkGrid({ data, all }: any) {
       </div>
       <div
         ref={ref}
-        className={`z-50 absolute inset-0 w-screen h-screen flex items-center overflow-hidden z-10${pageLoading ? ' pageReady' : ''} pointer-events-none`}
+        className={` inset-0 pt-[100px] xl:pt-0 w-screen min-h-screen relative flex xl:items-center ${pageLoading ? ' pageReady' : ''} pointer-events-none`}
       >
-        <div className="grid grid-cols-6 w-full">
-          <div className="col-span-full grid grid-cols-6 pointer-events-none ">
-            <div className="aspect-square relative"></div>
+        <div className="absolute w-screen h-full top-0 left-0 z-0 pointer-events-none">
+          <div className="h-screen w-full bgMux noControl z-0 opacity-[.8] sticky top-0">
+            {current && current == data.length ? (<MuxVideoBG playbackId={all.vid} title="Shows Video" ratio={all.ratio} />) : (
+              <MuxVideoBG playbackId={data[current ? current : 0].loop.vid} title="Shows Video" ratio={data[current ? current : 0].loop.ratio} />
+            )}
+
           </div>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-6 w-full relative z-50">
+
           {pageReady && data?.map((item: any, i: any) => (
             <React.Fragment key={i}>
-              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${i * .01}s` }}>
+              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="lg:aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${i * .01}s` }}>
                 <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black) counter"><p >{i + 1}</p> </div>
                 <h2 className=" text-[24px] leading-tight uppercase mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
                 <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
                 <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1} /></h2>
                 {i == current && <h2 className="onNorm">{<TextOn text="view project" num={0} />}</h2>}
               </Link>
-              <div className="aspect-square"></div>
+              <div className="aspect-square hidden xl:block"></div>
               {i == 2 ? (
                 <React.Fragment>
-                  <div className="col-span-full grid grid-cols-6 pointer-events-none">
-                    <div className="aspect-square relative"></div>
-                  </div>
-                  <div className="aspect-square relative"></div>
+
+                  <div className="aspect-square relative hidden xl:block"></div>
                 </React.Fragment>
               ) : ('')}
             </React.Fragment>
@@ -160,10 +157,6 @@ export default function WorkGrid({ data, all }: any) {
 
             {data.length == current && <h2 className="onNorm">{<TextOn text="view all" num={0} />}</h2>}
           </Link>}
-
-          <div className="col-span-full grid grid-cols-6 pointer-events-none ">
-            <div className="aspect-square relative"></div>
-          </div>
         </div>
       </div >
 

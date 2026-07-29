@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { TextOn } from "@/lib/util/misc"
 import { Cross } from "./assets/svg"
+import React from "react"
+import Grid from "./grid"
 
 const COLUMNS = 6
 const IDLE_TIMEOUT = 4000
@@ -59,54 +61,53 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
   }, [dim])
 
   return (
-    <div
-      ref={ref}
-      className="z-[40] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playerUI cursor-none"
-      onClick={onToggle}
-      onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
-    >
-      <div className="grid grid-cols-6 w-full align-start">
-
-        <div className="col-span-full grid grid-cols-6">
-          <div className="aspect-square relative fadeIn p-4 text-(--white) uppercase">
-
-            <h2 className="font-geis text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase">{data.abbr}</h2>
-
-            <h2 className="onNorm"><TextOn text={data.client} num={0} /></h2>
-            <h2 className="mb-[40px] onNorm"><TextOn text={data.title} num={.5} /></h2>
-            <h2 className="onNorm">{data.type && <TextOn text={data.type?.join(", ")} num={2.0} />}</h2>
-
-          </div>
-          <div
-            className="aspect-square col-end-7 flex justify-end p-4 items-start backBut"
-            onClick={(e) => {
-              e.stopPropagation()
-              router.back()
-            }}
-            onMouseEnter={() => setHoveringOther(true)}
-            onMouseLeave={() => setHoveringOther(false)}
-          >
-            <Cross stroke="white" className="w-[50px] h-auto rotate-[45deg]" />
-          </div>
-        </div>
-        <div className="col-span-full grid grid-cols-6 ">
-          <div className="aspect-square relative"></div>
-        </div>
-        <div className="col-span-full grid grid-cols-6 ">
-          <div className="aspect-square relative"></div>
-        </div>
-      </div>
-      <div className="scrubberHold absolute w-full h-[1px] left-0 z-50  top-1/2 left-0 translate-y-[-50%]">
-        <div className="scrubber h-full bg-(--oj) transition-[width] duration-300 ease-linear relative" style={{ width: `${progress}%` }}>
-          <div className="text-(--oj) absolute bottom-0 right-0 translate-y-full "><h2>{formatTime(currentTime)}</h2></div>
-        </div>
-      </div>
+    <React.Fragment>
+      <Grid />
       <div
-        className="controls fixed pointer-events-none uppercase text-(--white) text-[12px] z-50"
-        style={{ left: mouse.x, top: mouse.y, transform: 'translate(-50%, -50%)' }}
+        ref={ref}
+        className="z-[40] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playerUI cursor-none"
+        onClick={onToggle}
+        onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
       >
-        <h2>{hoveringOther ? 'Back' : isPlaying ? 'Pause' : 'Play'}</h2>
-      </div>
-    </div >
+        <div className="grid grid-cols-6 w-full align-start">
+          <div className="col-span-full grid grid-cols-6">
+            <div className="aspect-square relative fadeIn p-4 text-(--white) uppercase">
+              <h2 className="font-geis text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase">{data.abbr}</h2>
+              <h2 className="onNorm"><TextOn text={data.client} num={0} /></h2>
+              <h2 className="mb-[40px] onNorm"><TextOn text={data.title} num={.5} /></h2>
+              <h2 className="onNorm">{data.type && <TextOn text={data.type?.join(", ")} num={2.0} />}</h2>
+            </div>
+            <div
+              className="aspect-square col-end-7 flex justify-end p-4 items-start backBut"
+              onClick={(e) => {
+                e.stopPropagation()
+                router.back()
+              }}
+              onMouseEnter={() => setHoveringOther(true)}
+              onMouseLeave={() => setHoveringOther(false)}
+            >
+              <Cross stroke="white" className="w-[50px] h-auto rotate-[45deg]" />
+            </div>
+          </div>
+          <div className="col-span-full grid grid-cols-6 ">
+            <div className="aspect-square relative"></div>
+          </div>
+          <div className="col-span-full grid grid-cols-6 ">
+            <div className="aspect-square relative"></div>
+          </div>
+        </div>
+        <div className="scrubberHold absolute w-full h-[1px] left-0 z-50  top-1/2 left-0 translate-y-[-50%]">
+          <div className="scrubber h-full bg-(--oj) transition-[width] duration-300 ease-linear relative" style={{ width: `${progress}%` }}>
+            <div className="text-(--oj) absolute bottom-0 right-0 translate-y-full "><h2>{formatTime(currentTime)}</h2></div>
+          </div>
+        </div>
+        <div
+          className="controls fixed pointer-events-none uppercase text-(--white) text-[12px] z-50"
+          style={{ left: mouse.x, top: mouse.y, transform: 'translate(-50%, -50%)' }}
+        >
+          <h2>{hoveringOther ? 'Back' : isPlaying ? 'Pause' : 'Play'}</h2>
+        </div>
+      </div >
+    </React.Fragment>
   )
 }

@@ -35,7 +35,7 @@ export default function Playlist({ data }: any) {
   return (
     <div
       ref={ref}
-      className="z-[40] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playlist cursor-pointer pointer-events-none"
+      className="z-[39] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playlist cursor-pointer pointer-events-none"
     >
       <div className="grid grid-cols-6 w-full align-start">
 
