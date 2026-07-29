@@ -16,7 +16,7 @@ export default function Grid() {
   return (
     <div
       ref={ref}
-      className="z-50 absolute inset-0 w-screen h-screen flex items-center overflow-hidden pointer-events-none -z-10"
+      className="crossGrid z-50 absolute inset-0 w-screen h-screen flex items-center overflow-hidden pointer-events-none -z-10"
     >
       <div className="grid grid-cols-6 w-full">
         {Array.from({ length: rows * COLUMNS }).map((_, i) => (

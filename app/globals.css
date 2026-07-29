@@ -161,8 +161,13 @@ p {
 }
 
 .dim .playerUI,
-.dim .playlist {
+.dim .playlist,
+.dim .crossGrid {
   opacity: 0;
+}
+
+.singleWork:hover .counter {
+  background-color: #F34801;
 }
 
 

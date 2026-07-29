@@ -65,7 +65,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
       <Grid />
       <div
         ref={ref}
-        className="z-[40] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playerUI cursor-none"
+        className="z-[38] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playerUI cursor-none"
         onClick={onToggle}
         onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
       >
