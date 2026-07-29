@@ -56,7 +56,7 @@ export default function Nav() {
     return (
         <React.Fragment>
             <div className="fixed w-screen z-50 pointer-events-none mix-blend-difference bg-blend-difference playerUI">
-                <div className="w-screen justify-between flex items-center p-4">
+                <div className="w-screen justify-between flex items-center px-4">
                     <Link
                         href={`/`}
                         className="flex flex-shrink-0 items-center uppercase gap-4 pointer-events-auto"

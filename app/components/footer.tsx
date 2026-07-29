@@ -62,7 +62,7 @@ export default function Footer({ data }: any) {
                         <React.Fragment key={`social-${i}`} >
                             <div className="w-full text-(--white) singleNav">
                                 <a href={item.link} target="_blank">
-                                    <InView><InView as="span" className="text-(--gray)"><TextOn text={item.title} num={1.5 + i * .15} />:</InView> <TextOn text={item.handle} num={1.75 + i * .150} /></InView>
+                                    <InView><InView as="span" className="text-(--gray)"><TextOn text={item.title} num={.75 + i * .15} />:</InView> <TextOn text={item.handle} num={.8125 + i * .150} /></InView>
                                 </a>
                             </div>
                         </React.Fragment>

@@ -1,15 +1,56 @@
 'use client'
 
 import useMeasure from "react-use-measure"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useInView } from "motion/react"
 import { TextOn } from "@/lib/util/misc"
 import { MuxVideoBG } from "@/lib/util/muxPlayer"
 import MuxPlayer from "@mux/mux-player-react"
 import LogoLoader from "./logoLoader"
 
 const COLUMNS = 6
+
+function FeatItem({ item, i, current, isLgUp, activate, deactivate }: any) {
+  const itemRef = useRef<HTMLAnchorElement>(null)
+  const inView = useInView(itemRef, { once: false, margin: "30% 0px -70% 0px" })
+
+  useEffect(() => {
+    if (isLgUp) return
+    if (inView) activate(i)
+    else deactivate(i)
+  }, [inView, isLgUp, i, activate, deactivate])
+
+  return (
+    <Link ref={itemRef} href={`/work/${item.slug}`} onMouseEnter={isLgUp ? () => activate(i) : undefined} onMouseLeave={isLgUp ? () => deactivate(i) : undefined} className={`singleFeat lg:aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto${current === i ? ' active' : ''}`} style={{ animationDelay: `${i * .01}s` }}>
+      <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black) counter"><p >{i + 1}</p> </div>
+      <h2 className=" text-[24px] leading-tight uppercase mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
+      <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
+      <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1} /></h2>
+      {i == current && <h2 className="onNorm">{<TextOn text="view project" num={0} />}</h2>}
+    </Link>
+  )
+}
+
+function AllItem({ i, current, isLgUp, activate, deactivate }: any) {
+  const itemRef = useRef<HTMLAnchorElement>(null)
+  const inView = useInView(itemRef, { once: false, margin: "40% 0px -60% 0px" })
+
+  useEffect(() => {
+    if (isLgUp) return
+    if (inView) activate(i)
+    else deactivate(i)
+  }, [inView, isLgUp, i, activate, deactivate])
+
+  return (
+    <Link ref={itemRef} href={`/work/all`} onMouseEnter={isLgUp ? () => activate(i) : undefined} onMouseLeave={isLgUp ? () => deactivate(i) : undefined} className={`singleFeat lg:aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto${current === i ? ' active' : ''} pb-[60vh] md:pb-4`} style={{ animationDelay: `${i * .01}s` }}>
+      <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black) counter"><p >{">"}</p> </div>
+      <h2 className=" leading-tight uppercase mb-[40px] uppercase onNorm infoHide"> <TextOn text={'full project list'} num={.5 + (i * .1)} /></h2>
+      {i == current && <h2 className="onNorm">{<TextOn text="view all" num={0} />}</h2>}
+    </Link>
+  )
+}
 
 export default function WorkGrid({ data, all }: any) {
   const [ref, { width, height }] = useMeasure()
@@ -60,16 +101,39 @@ export default function WorkGrid({ data, all }: any) {
     return () => clearTimeout(timer)
   }, [preloadCount, videoIds.length]);
 
-  const Hover = (i: any, e: any) => {
-    setCurrent(i);
-    document.body.classList.add('hoverActive');
-    e.currentTarget.classList.add('active');
-  }
-  const UnHover = (e: any) => {
-    setCurrent(null)
-    document.body.classList.remove('hoverActive');
-    e.currentTarget.classList.remove('active');
-  }
+  const [isLgUp, setIsLgUp] = useState(true)
+
+  useEffect(() => {
+    const mql = window.matchMedia('(min-width: 1024px)')
+    const update = () => setIsLgUp(mql.matches)
+    update()
+    mql.addEventListener('change', update)
+    return () => mql.removeEventListener('change', update)
+  }, [])
+
+  useEffect(() => {
+    if (isLgUp) setCurrent(null)
+  }, [isLgUp])
+
+  useEffect(() => {
+    document.body.classList.toggle('hoverActive', current !== null)
+  }, [current])
+
+  const activate = useCallback((i: any) => {
+    setCurrent(i)
+  }, [])
+  const deactivate = useCallback((i: any) => {
+    setCurrent((prev) => (prev === i ? null : prev))
+  }, [])
+
+  const allRef = useRef<HTMLAnchorElement>(null)
+  const allInView = useInView(allRef, { once: false, margin: "30% 0px -70% 0px" })
+
+  useEffect(() => {
+    if (isLgUp) return
+    if (allInView) activate(data.length)
+    else deactivate(data.length)
+  }, [allInView, isLgUp, data.length, activate, deactivate])
 
   useEffect(() => {
     if (allLoaded) {
@@ -134,13 +198,9 @@ export default function WorkGrid({ data, all }: any) {
 
           {pageReady && data?.map((item: any, i: any) => (
             <React.Fragment key={i}>
-              <Link href={`/work/${item.slug}`} onMouseEnter={(e) => { Hover(i, e) }} onMouseLeave={(e) => { UnHover(e) }} className="lg:aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${i * .01}s` }}>
-                <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black) counter"><p >{i + 1}</p> </div>
-                <h2 className=" text-[24px] leading-tight uppercase mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
-                <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
-                <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1} /></h2>
-                {i == current && <h2 className="onNorm">{<TextOn text="view project" num={0} />}</h2>}
-              </Link>
+
+              <FeatItem item={item} i={i} current={current} isLgUp={isLgUp} activate={activate} deactivate={deactivate} />
+
               <div className="aspect-square hidden xl:block"></div>
               {i == 2 ? (
                 <React.Fragment>
@@ -150,13 +210,8 @@ export default function WorkGrid({ data, all }: any) {
               ) : ('')}
             </React.Fragment>
           ))}
-          {pageReady && <Link href={`/work/all`} onMouseEnter={(e) => { Hover(data.length, e) }} onMouseLeave={(e) => { UnHover(e) }} className="aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto" style={{ animationDelay: `${data.length * .00}s` }}>
-            <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black) counter"><p >{">"}</p> </div>
-            <h2 className=" leading-tight uppercase mb-[40px] uppercase onNorm infoHide"> <TextOn text={'full project list'} num={.5 + (data.length * .1)} /></h2>
-
-
-            {data.length == current && <h2 className="onNorm">{<TextOn text="view all" num={0} />}</h2>}
-          </Link>}
+          {pageReady && <AllItem i={data.length} current={current} isLgUp={isLgUp} activate={activate} deactivate={deactivate} />
+          }
         </div>
       </div >
 
