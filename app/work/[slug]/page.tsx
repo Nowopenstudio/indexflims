@@ -31,20 +31,20 @@ export default async function Home({ params }: any) {
   );
 }
 
-// export async function generateMetadata({ params }: any) {
-//   const { slug } = await params
-//   const query = await getData(`{
-//     'data':*[_type=='info'][0]{meta{title,description,keywords,"image":image.asset->url}},
-//      'head':*[_type=='work' && slug.current=="${slug}"][0]{cover{"image":image.asset->url}, client, title, "summary":pt::text(summary)}
-//  }`)
+export async function generateMetadata({ params }: any) {
+  const { slug } = await params
+  const query = await getData(`{
+    'data':*[_type=='settings'][0]{meta{title,description,keywords,"image":image.asset->url}},
+     'head':*[_type=='projects' && slug.current=="${slug}"][0]{client,title,meta{description,keywords,"image":image.asset->url}}
+ }`)
 
-//   const { data, head } = query.data
-//   return {
-//     title: `${head.client} - ${head.title} | Ryan Adair`,
-//     description: head.summary ?? data.meta.description,
-//     keywords: data.meta.keywords,
-//     openGraph: {
-//       images: head.cover.image ? `${head.cover.image}?auto=format&amp;w=500` : `${data.meta.image}?auto=format&amp;w=500`
-//     }
-//   };
-// }
+  const { data, head } = query.data
+  return {
+    title: `${head.client} - ${head.title} | Index Films`,
+    description: head.meta?.description ?? data.meta.description,
+    keywords: data.meta.keywords,
+    openGraph: {
+      images: head.meta?.image ? `${head.meta.image}?auto=format&amp;w=500` : `${data.meta.image}?auto=format&amp;w=500`
+    }
+  };
+}
