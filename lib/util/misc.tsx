@@ -1,6 +1,29 @@
 "use client"
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+export const BREAKPOINTS = {
+  md: '(min-width: 768px)',
+  lg: '(min-width: 1024px)',
+  xl: '(min-width: 1280px)',
+}
+
+export function useMediaQuery(query: string, defaultValue: boolean = false) {
+  const [matches, setMatches] = useState(() => {
+    if (typeof window === 'undefined') return defaultValue
+    return window.matchMedia(query).matches
+  })
+
+  useEffect(() => {
+    const mql = window.matchMedia(query)
+    const update = () => setMatches(mql.matches)
+    update()
+    mql.addEventListener('change', update)
+    return () => mql.removeEventListener('change', update)
+  }, [query])
+
+  return matches
+}
 
 export function TextOn({ text, num }: { text?: string; num?: number; }) {
 

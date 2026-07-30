@@ -62,7 +62,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
       <Grid />
       <div
         ref={ref}
-        className="z-[38] pt-[40px] md:pt-[100px] relative md:fixed inset-0 w-screen md:h-screen overflow-hidden playerUI cursor-none"
+        className="z-[38] pt-[20px] md:pt-[100px] relative md:fixed inset-0 w-screen md:h-screen overflow-hidden playerUI cursor-none"
         onClick={onToggle}
         onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
       >
@@ -78,7 +78,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
               className="absolute top-0 right-0 z-50 md:aspect-square md:relatove md:col-end-7 flex justify-end px-4 items-start backBut"
               onClick={(e) => {
                 e.stopPropagation()
-                router.back()
+                router.push(sessionStorage.getItem('lastListPage') ?? '/')
               }}
               onMouseEnter={() => setHoveringOther(true)}
               onMouseLeave={() => setHoveringOther(false)}

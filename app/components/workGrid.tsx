@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useInView } from "motion/react"
-import { TextOn } from "@/lib/util/misc"
+import { BREAKPOINTS, TextOn, useMediaQuery } from "@/lib/util/misc"
 import { MuxVideoBG } from "@/lib/util/muxPlayer"
 import MuxPlayer from "@mux/mux-player-react"
 import LogoLoader from "./logoLoader"
@@ -101,25 +101,8 @@ export default function WorkGrid({ data, all }: any) {
     return () => clearTimeout(timer)
   }, [preloadCount, videoIds.length]);
 
-  const [isLgUp, setIsLgUp] = useState(true)
-
-  useEffect(() => {
-    const mql = window.matchMedia('(min-width: 1024px)')
-    const update = () => setIsLgUp(mql.matches)
-    update()
-    mql.addEventListener('change', update)
-    return () => mql.removeEventListener('change', update)
-  }, [])
-
-  const [isMdUp, setIsMdUp] = useState(true)
-
-  useEffect(() => {
-    const mql = window.matchMedia('(min-width: 768px)')
-    const update = () => setIsMdUp(mql.matches)
-    update()
-    mql.addEventListener('change', update)
-    return () => mql.removeEventListener('change', update)
-  }, [])
+  const isLgUp = useMediaQuery(BREAKPOINTS.lg, true)
+  const isMdUp = useMediaQuery(BREAKPOINTS.md, true)
 
   useEffect(() => {
     if (isLgUp) setCurrent(null)

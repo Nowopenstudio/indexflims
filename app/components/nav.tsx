@@ -39,6 +39,12 @@ export default function Nav() {
     }, [pathname])
 
     useEffect(() => {
+        if (pathname === '/' || pathname === '/work/all') {
+            sessionStorage.setItem('lastListPage', pathname)
+        }
+    }, [pathname])
+
+    useEffect(() => {
         document.body.classList.toggle('pageReady', pathname !== '/')
         document.body.classList.toggle('pageSettled', pathname !== '/')
     }, [pathname])
