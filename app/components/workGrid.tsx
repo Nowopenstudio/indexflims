@@ -82,7 +82,10 @@ export default function WorkGrid({ data, all }: any) {
     }
   }, [pathname])
 
-  const videoIds: string[] = Array.from(new Set<string>(data?.map((item: any) => item.loop?.vid).filter(Boolean) ?? []))
+  const isLgUp = useMediaQuery(BREAKPOINTS.lg, true)
+  const isMdUp = useMediaQuery(BREAKPOINTS.md, true)
+
+  const videoIds: string[] = Array.from(new Set<string>(data?.map((item: any) => (isMdUp ? item.loop?.vid : item.loop?.mobVid)).filter(Boolean) ?? []))
   const allLoaded = loaderPercent >= 100
   const [preloadCount, setPreloadCount] = useState(1)
 
@@ -101,8 +104,10 @@ export default function WorkGrid({ data, all }: any) {
     return () => clearTimeout(timer)
   }, [preloadCount, videoIds.length]);
 
-  const isLgUp = useMediaQuery(BREAKPOINTS.lg, true)
-  const isMdUp = useMediaQuery(BREAKPOINTS.md, true)
+  useEffect(() => {
+    const timeout = setTimeout(() => setLoaderPercent((p) => (p < 100 ? 100 : p)), 3000)
+    return () => clearTimeout(timeout)
+  }, []);
 
   useEffect(() => {
     if (isLgUp) setCurrent(null)
