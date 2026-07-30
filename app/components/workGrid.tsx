@@ -14,7 +14,7 @@ const COLUMNS = 6
 
 function FeatItem({ item, i, current, isLgUp, activate, deactivate }: any) {
   const itemRef = useRef<HTMLAnchorElement>(null)
-  const inView = useInView(itemRef, { once: false, margin: "30% 0px -70% 0px" })
+  const inView = useInView(itemRef, { once: false, margin: "-15% 0px -75% 0px" })
 
   useEffect(() => {
     if (isLgUp) return
@@ -35,7 +35,7 @@ function FeatItem({ item, i, current, isLgUp, activate, deactivate }: any) {
 
 function AllItem({ i, current, isLgUp, activate, deactivate }: any) {
   const itemRef = useRef<HTMLAnchorElement>(null)
-  const inView = useInView(itemRef, { once: false, margin: "40% 0px -60% 0px" })
+  const inView = useInView(itemRef, { once: false, margin: "-15% 0px -75% 0px" })
 
   useEffect(() => {
     if (isLgUp) return
@@ -111,6 +111,16 @@ export default function WorkGrid({ data, all }: any) {
     return () => mql.removeEventListener('change', update)
   }, [])
 
+  const [isMdUp, setIsMdUp] = useState(true)
+
+  useEffect(() => {
+    const mql = window.matchMedia('(min-width: 768px)')
+    const update = () => setIsMdUp(mql.matches)
+    update()
+    mql.addEventListener('change', update)
+    return () => mql.removeEventListener('change', update)
+  }, [])
+
   useEffect(() => {
     if (isLgUp) setCurrent(null)
   }, [isLgUp])
@@ -125,15 +135,6 @@ export default function WorkGrid({ data, all }: any) {
   const deactivate = useCallback((i: any) => {
     setCurrent((prev) => (prev === i ? null : prev))
   }, [])
-
-  const allRef = useRef<HTMLAnchorElement>(null)
-  const allInView = useInView(allRef, { once: false, margin: "30% 0px -70% 0px" })
-
-  useEffect(() => {
-    if (isLgUp) return
-    if (allInView) activate(data.length)
-    else deactivate(data.length)
-  }, [allInView, isLgUp, data.length, activate, deactivate])
 
   useEffect(() => {
     if (allLoaded) {
@@ -188,9 +189,12 @@ export default function WorkGrid({ data, all }: any) {
       >
         <div className="absolute w-screen h-full top-0 left-0 z-0 pointer-events-none">
           <div className="h-screen w-full bgMux noControl z-0 opacity-[.8] sticky top-0">
-            {current && current == data.length ? (<MuxVideoBG playbackId={all.vid} title="Shows Video" ratio={all.ratio} />) : (
+
+            {isMdUp ? (current && current == data.length ? (<MuxVideoBG playbackId={all.vid} title="Shows Video" ratio={all.ratio} />) : (
               <MuxVideoBG playbackId={data[current ? current : 0].loop.vid} title="Shows Video" ratio={data[current ? current : 0].loop.ratio} />
-            )}
+            )) : (current && current == data.length ? (<MuxVideoBG playbackId={all.vid} title="Shows Video" ratio={all.ratio} />) : (
+              <MuxVideoBG playbackId={data[current ? current : 0].loop.mobVid} title="Shows Video" ratio={data[current ? current : 0].loop.mobRatio} />
+            ))}
 
           </div>
         </div>

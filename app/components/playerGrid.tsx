@@ -8,7 +8,6 @@ import { Cross } from "./assets/svg"
 import React from "react"
 import Grid from "./grid"
 
-const COLUMNS = 6
 const IDLE_TIMEOUT = 4000
 
 const formatTime = (time: number) => {
@@ -24,9 +23,7 @@ const formatTime = (time: number) => {
 export default function PlayGrid({ data, duration, currentTime, isPlaying, onToggle }: any) {
   const router = useRouter()
   const [ref, { width, height }] = useMeasure()
-  const cellSize = width / COLUMNS
-  let rows = cellSize > 0 ? Math.ceil(height / cellSize) : 0
-  if (rows > 0 && rows % 2 === 0) rows += 1
+
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0
 
@@ -65,20 +62,20 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
       <Grid />
       <div
         ref={ref}
-        className="z-[38] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playerUI cursor-none"
+        className="z-[38] pt-[40px] md:pt-[100px] relative md:fixed inset-0 w-screen md:h-screen overflow-hidden playerUI cursor-none"
         onClick={onToggle}
         onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
       >
-        <div className="grid grid-cols-6 w-full align-start">
-          <div className="col-span-full grid grid-cols-6">
-            <div className="aspect-square relative fadeIn p-4 text-(--white) uppercase">
+        <div className="gridHold grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 w-full align-start">
+          <div className="col-span-full grid grid-cols-6 relative">
+            <div className="col-span-full lg:col-span-1 md:aspect-square relative fadeIn p-4 text-(--white) uppercase">
               <h2 className="font-geis text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase">{data.abbr}</h2>
               <h2 className="onNorm"><TextOn text={data.client} num={0} /></h2>
               <h2 className="mb-[40px] onNorm"><TextOn text={data.title} num={.5} /></h2>
               <h2 className="onNorm">{data.type && <TextOn text={data.type?.join(", ")} num={2.0} />}</h2>
             </div>
             <div
-              className="aspect-square col-end-7 flex justify-end p-4 items-start backBut"
+              className="absolute top-0 right-0 z-50 md:aspect-square md:relatove md:col-end-7 flex justify-end px-4 items-start backBut"
               onClick={(e) => {
                 e.stopPropagation()
                 router.back()
@@ -96,7 +93,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
             <div className="aspect-square relative"></div>
           </div>
         </div>
-        <div className="scrubberHold absolute w-full h-[1px] left-0 z-50  top-1/2 left-0 translate-y-[-50%]">
+        <div className="scrubberHold absolute w-full h-[1px] left-0 z-50 top-0 md:top-1/2 left-0 translate-y-[-50%]">
           <div className="scrubber h-full bg-(--oj) transition-[width] duration-300 ease-linear relative" style={{ width: `${progress}%` }}>
             <div className="text-(--oj) absolute bottom-0 right-0 translate-y-full "><h2>{formatTime(currentTime)}</h2></div>
           </div>

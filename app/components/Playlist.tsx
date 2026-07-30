@@ -35,18 +35,11 @@ export default function Playlist({ data }: any) {
   return (
     <div
       ref={ref}
-      className="z-[39] fixed inset-0 w-screen h-screen flex items-center overflow-hidden playlist cursor-pointer pointer-events-none"
+      className="pb-[50px] lg:pb-[100px] z-[39] fixed inset-0 w-screen h-screen flex flex-col justify-end overflow-hidden playlist cursor-pointer pointer-events-none"
     >
       <div className="grid grid-cols-6 w-full align-start">
 
-        <div className="col-span-full grid grid-cols-6">
-          <div className="aspect-square relative fadeIn p-4 text-(--white) uppercase">
 
-          </div>
-        </div>
-        <div className="col-span-full grid grid-cols-6 ">
-          <div className="aspect-square relative"></div>
-        </div>
         <div className="col-span-full flex gap-0">
           {data?.map((item: any, i: any) => (
             <React.Fragment key={i}>

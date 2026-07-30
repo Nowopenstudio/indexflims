@@ -22,7 +22,7 @@ export default function PlayerStage({ data }: any) {
 
   return (
     <>
-      <div className="h-full w-full flex items-center noControl z-0 opacity-[.8] pb-[23px]">
+      <div className="md:h-full h-auto w-full md:flex md:items-center noControl z-0 opacity-[.8] pb-[23px]">
         <MuxVideo
           playbackId={data.full.vid}
           title="Shows Video"
