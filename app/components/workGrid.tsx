@@ -105,7 +105,7 @@ export default function WorkGrid({ data, all }: any) {
   }, [preloadCount, videoIds.length]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setLoaderPercent((p) => (p < 100 ? 100 : p)), 3000)
+    const timeout = setTimeout(() => setLoaderPercent((p) => (p < 100 ? 100 : p)), 2000)
     return () => clearTimeout(timeout)
   }, []);
 
