@@ -9,6 +9,7 @@ import { BREAKPOINTS, TextOn, useMediaQuery } from "@/lib/util/misc"
 import { MuxVideoBG } from "@/lib/util/muxPlayer"
 import MuxPlayer from "@mux/mux-player-react"
 import LogoLoader from "./logoLoader"
+import Grid from "./grid"
 
 const COLUMNS = 6
 
@@ -54,6 +55,11 @@ function AllItem({ i, current, isLgUp, activate, deactivate }: any) {
 
 export default function WorkGrid({ data, all }: any) {
   const [ref, { width, height }] = useMeasure()
+  const contentRef = useRef<HTMLDivElement>(null)
+  const setRefs = useCallback((el: HTMLDivElement | null) => {
+    ref(el)
+    contentRef.current = el
+  }, [ref])
   const [current, setCurrent] = useState(null)
   const [loadedIds, setLoadedIds] = useState<Set<string>>(new Set())
   const [loaderPercent, setLoaderPercent] = useState(0)
@@ -84,6 +90,43 @@ export default function WorkGrid({ data, all }: any) {
 
   const isLgUp = useMediaQuery(BREAKPOINTS.lg, true)
   const isMdUp = useMediaQuery(BREAKPOINTS.md, true)
+  const isXlUp = useMediaQuery(BREAKPOINTS.xl, true)
+
+  const [alignedTop, setAlignedTop] = useState(100)
+
+  useEffect(() => {
+    const minTop = isXlUp ? 0 : 100
+
+    if (!isMdUp) {
+      setAlignedTop(minTop)
+      return
+    }
+
+    const measure = () => {
+      const contentEl = contentRef.current
+      const gridHold = document.querySelector('.crossGrid .gridHold')
+      const firstCell = gridHold?.children?.[0] as HTMLElement | undefined
+      if (!contentEl || !gridHold || !firstCell) return
+
+      const contentTop = contentEl.getBoundingClientRect().top
+      const gridTop = gridHold.getBoundingClientRect().top
+      const cellHeight = firstCell.getBoundingClientRect().height
+      if (cellHeight <= 0) return
+
+      const target = contentTop + minTop
+      let steps = Math.round((target - gridTop) / cellHeight)
+      let alignedY = gridTop + steps * cellHeight
+      while (alignedY < 200) {
+        steps += 1
+        alignedY = gridTop + steps * cellHeight
+      }
+      setAlignedTop(Math.max(0, alignedY - contentTop))
+    }
+
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [isMdUp, isXlUp, width, height])
 
   const videoIds: string[] = Array.from(new Set<string>(data?.map((item: any) => (isMdUp ? item.loop?.vid : item.loop?.mobVid)).filter(Boolean) ?? []))
   const allLoaded = loaderPercent >= 100
@@ -147,6 +190,7 @@ export default function WorkGrid({ data, all }: any) {
 
   return (
     <React.Fragment>
+      <Grid />
       {showLoader && (
         <LogoLoader
           percent={loaderPercent}
@@ -172,8 +216,9 @@ export default function WorkGrid({ data, all }: any) {
         ))}
       </div>
       <div
-        ref={ref}
-        className={` inset-0 pt-[100px] xl:pt-0 w-screen min-h-screen relative flex xl:items-center ${pageLoading ? ' pageReady' : ''} pointer-events-none`}
+        ref={setRefs}
+        className={` inset-0 w-screen min-h-screen relative flex items-start  ${pageLoading ? ' pageReady' : ''} pointer-events-none`}
+        style={{ paddingTop: alignedTop }}
       >
         <div className="absolute w-screen h-full top-0 left-0 z-0 pointer-events-none">
           <div className="h-screen w-full bgMux noControl z-0 opacity-[.8] sticky top-0">
@@ -186,7 +231,7 @@ export default function WorkGrid({ data, all }: any) {
 
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-6 w-full relative z-50">
+        <div className="workGrid grid grid-cols-1 md:grid-cols-4 xl:grid-cols-6 w-full relative z-50">
 
           {pageReady && data?.map((item: any, i: any) => (
             <React.Fragment key={i}>

@@ -125,11 +125,6 @@ p {
   white-space: nowrap;
 }
 
-.onNorm .toolLetter {
-  opacity: 0;
-  animation: typeOn .05s 1 forwards;
-}
-
 .infoHide,
 .logoHold {
   transition: opacity .5s ease-in-out;
@@ -174,19 +169,6 @@ p {
 
 
 
-@keyframes typeOn {
-  0% {
-    opacity: 0;
-  }
-
-  70% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
 
 .readyIn {
   opacity: 0

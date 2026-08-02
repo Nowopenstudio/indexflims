@@ -2,7 +2,7 @@
 
 import useMeasure from "react-use-measure"
 import { usePathname } from "next/navigation"
-import { BREAKPOINTS, useMediaQuery } from "@/lib/util/misc"
+import { BREAKPOINTS, useMediaQuery, getGridLayout } from "@/lib/util/misc"
 import { Cross } from "./assets/svg"
 
 export default function Grid() {
@@ -12,10 +12,7 @@ export default function Grid() {
   const isMdUp = useMediaQuery(BREAKPOINTS.md)
   const columns = isXlUp ? 6 : isMdUp ? 4 : 2
 
-  const cellSize = width / columns
-  let rows = cellSize > 0 ? Math.ceil(height / cellSize) : 0
-  if (columns < 6) rows *= 2
-  if (rows > 0 && rows % 2 === 0) rows += 1
+  const { rows } = getGridLayout(width, height, columns)
 
   return (
     <div

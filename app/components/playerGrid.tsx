@@ -59,7 +59,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
 
   return (
     <React.Fragment>
-      <Grid />
+
       <div
         ref={ref}
         className="z-[38] pt-[20px] md:pt-[100px] relative md:fixed inset-0 w-screen md:h-screen overflow-hidden playerUI cursor-none"

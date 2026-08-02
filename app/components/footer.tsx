@@ -41,10 +41,12 @@ export default function Footer({ data }: any) {
                         {item.contacts?.map((single: any, s: number) => (
                             <React.Fragment key={i + s} >
                                 <div className="w-full mb-8">
-                                    <a className="singleNav" href={`mailto:${single.email}`}>
-                                        <InView><TextOn text={single.email} num={i * .25 + s * .15} /></InView>
-                                    </a>
-                                    <InView><TextOn text={single.phone} num={i * .5 + s * .2} /></InView>
+                                    {single.name && <InView>
+                                        <TextOn text={single.name} num={i * .15 + s * .1} />
+                                    </InView>}
+                                    {single.email && <a className="singleNav" href={`mailto:${single.email}`}><InView><TextOn text={single.email} num={i * .25 + s * .15} /></InView></a>}
+
+                                    {single.phone && <a className="singleNav" href={`tel:${single.phone}`}><InView><TextOn text={single.phone} num={i * .5 + s * .2} /></InView></a>}
                                 </div>
 
                                 {single.street && (
@@ -57,7 +59,7 @@ export default function Footer({ data }: any) {
                         ))}
                     </div>
                 ))}
-                <div className="col-span-full 2xl:col-span-1 2xl:col-end-5 px-4 2xl:pt-[100px]">
+                <div className="col-span-full 2xl:col-span-1 p-4">
                     {data.socials?.map((item: any, i: number) => (
                         <React.Fragment key={`social-${i}`} >
                             <div className="w-full text-(--white) singleNav">

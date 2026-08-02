@@ -15,23 +15,24 @@ export default function Nav() {
     const prevPathname = useRef<string | undefined>(undefined)
 
     const scrollToFooterEl = (attempts = 0) => {
-        if (!lenis) return
         const target = document.querySelector('#footer')
-        if (target) {
+        if (lenis && target) {
             lenis.scrollTo(target as HTMLElement, {
                 duration: 1.5,
                 easing: (t: number) => 1 - Math.pow(1 - t, 3),
             })
-        } else if (attempts < 20) {
+        } else if (attempts < 30) {
             setTimeout(() => scrollToFooterEl(attempts + 1), 100)
         }
     }
 
     const goToFooter = (e: React.MouseEvent) => {
+        sessionStorage.setItem('scrollToFooter', 'true')
         if (pathname !== '/') return
         e.preventDefault()
         window.history.pushState(null, '', '/#footer')
         scrollToFooterEl()
+        sessionStorage.removeItem('scrollToFooter')
     }
 
     useEffect(() => {
@@ -52,8 +53,9 @@ export default function Nav() {
     useEffect(() => {
         if (pathname === '/' && prevPathname.current && prevPathname.current !== '/') {
             sessionStorage.setItem('skipLoader', 'true')
-            if (window.location.hash === '#footer') {
-                setTimeout(() => scrollToFooterEl(), 750)
+            if (sessionStorage.getItem('scrollToFooter') === 'true') {
+                sessionStorage.removeItem('scrollToFooter')
+                scrollToFooterEl()
             }
         }
         prevPathname.current = pathname
