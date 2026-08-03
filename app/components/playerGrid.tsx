@@ -72,7 +72,17 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
               <h2 className="font-geis text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase">{data.abbr}</h2>
               <h2 className="onNorm"><TextOn text={data.client} num={0} /></h2>
               <h2 className="mb-[40px] onNorm"><TextOn text={data.title} num={.5} /></h2>
+              {data.credits ? (
+                <div className="mb-[40px]">
+                  {data.credits.map((item: any, i: number) => {
+                    return (
+                      <h2 key={i} className="onNorm"><TextOn text={`${item.role} : ${item.name}`} num={.5} /></h2>
+                    )
+                  })}
+                </div>
+              ) : ('')}
               <h2 className="onNorm">{data.type && <TextOn text={data.type?.join(", ")} num={2.0} />}</h2>
+
             </div>
             <div
               className="absolute top-0 right-0 z-50 md:aspect-square md:relatove md:col-end-7 flex justify-end px-4 items-start backBut"
