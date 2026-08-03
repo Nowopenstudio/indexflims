@@ -39,8 +39,9 @@ export async function generateMetadata({ params }: any) {
  }`)
 
   const { data, head } = query.data
+  const capitalize = (str: string) => str?.replace(/\b\w/g, (c: string) => c.toUpperCase())
   return {
-    title: `${head.client} - ${head.title} | Index Films`,
+    title: `${capitalize(head.client)} - ${capitalize(head.title)} | Index Films`,
     description: head.meta?.description ?? data.meta.description,
     keywords: data.meta.keywords,
     openGraph: {
