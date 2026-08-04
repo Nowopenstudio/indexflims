@@ -23,7 +23,7 @@ export default function PlayerStage({ data }: any) {
   return (
     <>
       <div className="md:h-full pt-[56px] md:pt-0 h-auto w-full md:flex md:items-center noControl z-0 opacity-[.8] pb-[23px]">
-        <MuxVideo
+        {data && data.full.vid && <MuxVideo
           playbackId={data.full.vid}
           title="Shows Video"
           ratio={data.full.ratio}
@@ -32,7 +32,7 @@ export default function PlayerStage({ data }: any) {
           onTimeUpdate={(e: any) => setCurrentTime(e.target.currentTime)}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-        />
+        />}
       </div>
       <PlayGrid data={data} duration={duration} currentTime={currentTime} isPlaying={isPlaying} onToggle={togglePlay} />
     </>
