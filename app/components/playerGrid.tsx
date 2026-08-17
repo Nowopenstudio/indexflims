@@ -109,7 +109,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
           </div>
         </div>
         <div
-          className="controls fixed pointer-events-none uppercase text-(--white) text-[12px] z-50"
+          className="hidden md:block controls fixed pointer-events-none uppercase text-(--white) text-[12px] z-50"
           style={{ left: mouse.x, top: mouse.y, transform: 'translate(-50%, -50%)' }}
         >
           <h2>{hoveringOther ? 'Back' : isPlaying ? 'Pause' : 'Play'}</h2>

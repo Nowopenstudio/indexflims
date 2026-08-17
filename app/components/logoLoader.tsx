@@ -71,7 +71,7 @@ export default function LogoLoader({ percent, onSettled, onScaleStart }: any) {
   return (
     <motion.div
       ref={ref}
-      className="fixed inset-0 h-screen w-screen z-[40] overflow-hidden"
+      className="fixed inset-0 h-(100dvh) w-screen z-[40] overflow-hidden"
       animate={{ opacity: complete ? 0 : 1 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: complete ? 3.4 : 0 }}
       style={{ pointerEvents: complete ? "none" : "auto" }}
