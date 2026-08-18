@@ -10,7 +10,7 @@ export default async function Home({ params }: any) {
   const { slug } = await params
   const query = await getData(`{
       'feat':*[_type=='settings'][0]{feat[]->{title,client,abbr,"slug":slug.current,copy,loop{"image":image.asset->url, "vid":video.asset->playbackId, "ratio":video.asset->data.aspect_ratio}}},
-    'data':*[_type=='projects' && slug.current=="${slug}"][0]{full{"image":image.asset->url, "vid":video.asset->playbackId, "ratio":video.asset->data.aspect_ratio}, title, client,abbr,type,credits}
+    'data':*[_type=='projects' && slug.current=="${slug}"][0]{awards,full{"image":image.asset->url, "vid":video.asset->playbackId, "ratio":video.asset->data.aspect_ratio}, title, client,abbr,type,credits}
  }`)
 
 

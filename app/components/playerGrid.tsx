@@ -4,7 +4,7 @@ import useMeasure from "react-use-measure"
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { TextOn } from "@/lib/util/misc"
-import { Cross } from "./assets/svg"
+import { Cross, Laurel } from "./assets/svg"
 import React from "react"
 import Grid from "./grid"
 
@@ -68,7 +68,7 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
       >
         <div className="gridHold grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 w-full align-start">
           <div className="col-span-full grid grid-cols-6 relative">
-            <div className="col-span-full lg:col-span-1 md:aspect-square relative fadeIn p-4 text-(--white) uppercase">
+            <div className="col-span-full lg:col-span-1 lg:aspect-square relative fadeIn p-4 text-(--white) uppercase">
               <h2 className="font-geis text-[24px] leading-tight uppercase text-(--white) mb-[40px] uppercase">{data.abbr}</h2>
               <h2 className="onNorm"><TextOn text={data.client} num={0} /></h2>
               <h2 className="mb-[40px] onNorm"><TextOn text={data.title} num={.5} /></h2>
@@ -83,6 +83,20 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
               ) : ('')}
               <h2 className="onNorm">{data.type && <TextOn text={data.type?.join(", ")} num={2.0} />}</h2>
 
+            </div>
+            <div className="col-span-full lg:col-span-2 lg:col-start-3 pointer-events-none pt-8 lg:pt-0 px-4">
+              <div className="w-full h-auto flex flex-wrap md:flex-nowrap justify-start lg:justify-center items-center gap-4 md:gap-8">
+                {data.awards?.map((a: any, i: number) => {
+                  return (
+                    <div key={i} className="w-[100px] md:w-[120px] relative flex-shrink-0 h-auto">
+                      <Laurel className="w-full h-auto" fill="white" />
+                      <div className="w-full absolute h-full top-0 left-0 uppercase flex text-center items-center justify-center text-white z-10 px-4 pb-2">
+                        <p className="caption">{a.title}</p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
             <div
               className="absolute top-0 right-0 z-50 md:aspect-square md:relatove md:col-end-7 flex justify-end px-4 items-start backBut"

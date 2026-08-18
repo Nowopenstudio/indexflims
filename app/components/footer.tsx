@@ -70,7 +70,7 @@ export default function Footer({ data }: any) {
                         </React.Fragment>
                     ))}
                 </div>
-                <div className="col-span-full 2xl:col-span-3 p-4 mt-10">
+                {/* <div className="col-span-full 2xl:col-span-3 p-4 mt-10">
                     <div className="w-full lg:w-2/3">
                         <div className="w-full flex items-center mb-4  text-(--gray)"><InView><TextOn text={"awards"} num={1} /></InView></div>
                         {data.awards.map((item: any, i: number) => {
@@ -89,7 +89,7 @@ export default function Footer({ data }: any) {
                             )
                         })}
                     </div>
-                </div>
+                </div> */}
 
             </div>
 

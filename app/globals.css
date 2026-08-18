@@ -121,6 +121,12 @@ p {
   letter-spacing: 2px;
 }
 
+.caption {
+  font-size: 8pt;
+  line-height: 1.25em;
+  letter-spacing: .1em;
+}
+
 #toolText {
   white-space: nowrap;
 }
@@ -132,7 +138,7 @@ p {
 
 /* hover actives */
 .hoverActive .infoHide,
-.hoverActive .logoHold {
+.hoverActive .logoHol d {
   opacity: 0;
 }
 
