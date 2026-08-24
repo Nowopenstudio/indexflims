@@ -138,7 +138,7 @@ p {
 
 /* hover actives */
 .hoverActive .infoHide,
-.hoverActive .logoHol d {
+.hoverActive .logoHold {
   opacity: 0;
 }
 
@@ -214,4 +214,11 @@ p {
     opacity: 1;
   }
 
+}
+
+@media (max-width: 768px) {
+
+  .hoverActive .infoHide {
+    opacity: 1;
+  }
 }
