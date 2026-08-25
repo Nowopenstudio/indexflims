@@ -221,4 +221,8 @@ p {
   .hoverActive .infoHide {
     opacity: 1;
   }
+
+  .active .infoHide {
+    color: var(--oj) !important;
+  }
 }

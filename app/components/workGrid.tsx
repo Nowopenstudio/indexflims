@@ -29,7 +29,7 @@ function FeatItem({ item, i, current, isLgUp, activate, deactivate }: any) {
       <h2 className=" text-[24px] leading-tight uppercase mb-[40px] uppercase onNorm infoHide"> <TextOn text={item.abbr} num={.5 + (i * .1)} /></h2>
       <h2 className="onNorm infoHide"><TextOn text={item.client} num={(i * .2) + .75} /></h2>
       <h2 className="onNorm infoHide mb-[40px]"><TextOn text={item.title} num={(i * .3) + 1} /></h2>
-      {i == current && <h2 className="onNorm">{<TextOn text="view project" num={0} />}</h2>}
+      {i == current && <h2 className="onNorm text-(--oj) md:text-white">{<TextOn text="view project" num={0} />}</h2>}
     </Link>
   )
 }
@@ -48,7 +48,7 @@ function AllItem({ i, current, isLgUp, activate, deactivate }: any) {
     <Link ref={itemRef} href={`/work/all`} onMouseEnter={isLgUp ? () => activate(i) : undefined} onMouseLeave={isLgUp ? () => deactivate(i) : undefined} className={`singleFeat lg:aspect-square relative fadeIn p-4 text-(--white) uppercase pointer-events-auto${current === i ? ' active' : ''} pb-[60vh] md:pb-4`} style={{ animationDelay: `${i * .01}s` }}>
       <div className="flex mb-4 w-[30px] aspect-square items-center justify-center  bg-(--white) text-(--black) counter"><p >{">"}</p> </div>
       <h2 className=" leading-tight uppercase mb-[40px] uppercase onNorm infoHide"> <TextOn text={'full project list'} num={.5 + (i * .1)} /></h2>
-      {i == current && <h2 className="onNorm">{<TextOn text="view all" num={0} />}</h2>}
+      {i == current && <h2 className="onNorm text-(--oj) md:text-white">{<TextOn text="view all" num={0} />}</h2>}
     </Link>
   )
 }
