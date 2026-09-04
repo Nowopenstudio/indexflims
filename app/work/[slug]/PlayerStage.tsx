@@ -20,6 +20,13 @@ export default function PlayerStage({ data }: any) {
     }
   }
 
+  const handleSeek = (time: number) => {
+    const player = playerRef.current
+    if (!player) return
+    player.currentTime = time
+    setCurrentTime(time)
+  }
+
   return (
     <>
       <div className="md:h-full pt-[56px] md:pt-0 h-auto w-full md:flex md:items-center noControl z-0 opacity-[.8] pb-[23px]">
@@ -34,7 +41,7 @@ export default function PlayerStage({ data }: any) {
           onPause={() => setIsPlaying(false)}
         />}
       </div>
-      <PlayGrid data={data} duration={duration} currentTime={currentTime} isPlaying={isPlaying} onToggle={togglePlay} />
+      <PlayGrid data={data} duration={duration} currentTime={currentTime} isPlaying={isPlaying} onToggle={togglePlay} onSeek={handleSeek} />
     </>
   )
 }

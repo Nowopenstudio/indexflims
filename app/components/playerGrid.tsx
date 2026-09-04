@@ -20,17 +20,55 @@ const formatTime = (time: number) => {
     .join(':')
 }
 
-export default function PlayGrid({ data, duration, currentTime, isPlaying, onToggle }: any) {
+export default function PlayGrid({ data, duration, currentTime, isPlaying, onToggle, onSeek }: any) {
   const router = useRouter()
   const [ref, { width, height }] = useMeasure()
 
+  const [dragging, setDragging] = useState(false)
+  const [dragProgress, setDragProgress] = useState(0)
+  const scrubberHoldRef = useRef<HTMLDivElement>(null)
 
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0
+  const progress = dragging
+    ? dragProgress
+    : duration > 0 ? (currentTime / duration) * 100 : 0
+  const displayTime = dragging ? (dragProgress / 100) * duration : currentTime
 
   const [dim, setDim] = useState(false)
   const idleTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
   const [hoveringOther, setHoveringOther] = useState(false)
+  const [hoveringSeeker, setHoveringSeeker] = useState(false)
+
+  const progressFromEvent = (e: { clientX: number }) => {
+    const el = scrubberHoldRef.current
+    if (!el) return 0
+    const rect = el.getBoundingClientRect()
+    return Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width)) * 100
+  }
+
+  const handleSeekPointerDown = (e: React.PointerEvent) => {
+    e.stopPropagation()
+    const pct = progressFromEvent(e)
+    setDragging(true)
+    setDragProgress(pct)
+    onSeek?.((pct / 100) * duration)
+      ; (e.target as HTMLElement).setPointerCapture(e.pointerId)
+  }
+
+  const handleSeekPointerMove = (e: React.PointerEvent) => {
+    if (!dragging) return
+    e.stopPropagation()
+    const pct = progressFromEvent(e)
+    setDragProgress(pct)
+    onSeek?.((pct / 100) * duration)
+  }
+
+  const handleSeekPointerUp = (e: React.PointerEvent) => {
+    if (!dragging) return
+    e.stopPropagation()
+    setDragging(false)
+      ; (e.target as HTMLElement).releasePointerCapture(e.pointerId)
+  }
 
   useEffect(() => {
     const resetIdle = () => {
@@ -117,16 +155,31 @@ export default function PlayGrid({ data, duration, currentTime, isPlaying, onTog
             <div className="aspect-square relative"></div>
           </div>
         </div>
-        <div className="scrubberHold absolute w-full h-[1px] left-0 z-50 top-0 md:top-1/2 left-0 translate-y-[-50%]">
-          <div className="scrubber h-full bg-(--oj) transition-[width] duration-300 ease-linear relative" style={{ width: `${progress}%` }}>
-            <div className="text-(--oj) absolute bottom-0 right-0 translate-y-full "><h2>{formatTime(currentTime)}</h2></div>
+        <div ref={scrubberHoldRef} className="scrubberHold absolute w-full h-[1px] left-0 z-50 top-0 md:top-1/2 left-0 translate-y-[-50%]">
+          <div
+            className="scrubber h-full bg-(--oj) relative"
+            style={{ width: `${progress}%`, transition: dragging ? 'none' : 'width 300ms linear' }}
+          >
+            <div
+              id="seeker"
+              className="text-(--oj) absolute bottom-0 right-0 translate-y-full pointer-events-auto  touch-none"
+              onPointerDown={handleSeekPointerDown}
+              onPointerMove={handleSeekPointerMove}
+              onPointerUp={handleSeekPointerUp}
+              onPointerCancel={handleSeekPointerUp}
+              onClick={(e) => e.stopPropagation()}
+              onMouseEnter={() => setHoveringSeeker(true)}
+              onMouseLeave={() => setHoveringSeeker(false)}
+            >
+              <h2>{formatTime(displayTime)}</h2>
+            </div>
           </div>
         </div>
         <div
           className="hidden md:block controls fixed pointer-events-none uppercase text-(--white) text-[12px] z-50"
           style={{ left: mouse.x, top: mouse.y, transform: 'translate(-50%, -50%)' }}
         >
-          <h2>{hoveringOther ? 'Back' : isPlaying ? 'Pause' : 'Play'}</h2>
+          <h2>{hoveringOther ? 'Back' : (hoveringSeeker || dragging) ? 'Seek' : isPlaying ? 'Pause' : 'Play'}</h2>
         </div>
       </div >
     </React.Fragment>

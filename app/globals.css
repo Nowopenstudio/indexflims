@@ -226,3 +226,10 @@ p {
     color: var(--oj) !important;
   }
 }
+
+@media (max-width: 450px) {
+
+  .caption {
+    font-size: 7.2pt;
+  }
+}
